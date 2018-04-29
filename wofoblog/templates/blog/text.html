@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CKEditor</title>
+
+        <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+    </head>
+    <body>
+        <textarea name="editor1"></textarea>
+        <div>
+            <input type="text " />
+        </div>
+        <script>
+            CKEDITOR.replace( 'editor1' , {uiColor: '#9AB8F3'});
+        </script>
+    </body>
+</html>
+
+
+   <div class="framework_nav">
+
+                        <div show="true">
+                {% recursetree nodes %}
+
+                    <div>
+                        {% if node.is_leaf_nodes %}
+                            <div>{{ node }}</div>
+                            <p>{{ node.blog_commit }}</p>
+                            <input type="button" class="{{ comment.number_commit }}" onclick="gg({{ comment.number_commit }})" value="回复"/>
+                        {% else %}
+                            <div>{{ node }}</div>
+                            <p>{{ node.blog_commit }}</p>
+                        <input type="button" class="{{ comment.number_commit }}" onclick="gg({{ comment.number_commit }})" value="回复"/>
+                            <div>
+                               <p>{{ children }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endrecursetree %}
+            </div>
+
+                        </div>
+
+
+
+ $(function(){
+            $(".framework_nav").SimpleTree({
+
+            });
+        });

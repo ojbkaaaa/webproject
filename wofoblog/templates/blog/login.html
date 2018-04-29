@@ -1,0 +1,56 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8">
+		<link href="{% static 'blog/login/css/style.css' %}" rel='stylesheet' type='text/css' />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--webfonts-->
+		<!--//webfonts-->
+	<style>
+		.hidden{
+		 display: none;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="main" style="width: 82%; margin: 6em auto 0;padding: 0;border: 0; font-size: 100%;font: inherit;vertical-align: baseline; display: block;">
+		<div class="header" >
+			<h1><a href="#" id="login-one">登录</a><a href="#" class="hidden" id="register-one">注册</a></h1>
+		</div>
+		<p></p>
+		<form method="post" action="{% url 'blog:login' %}" id="login-two">
+			{% csrf_token %}
+			{% if info.error_lg %}
+				<p style="color:red">{{ info.error_lg }}</p>
+			{% else %}
+
+			{% endif %}
+			{{ lg.as_p }}
+			<input type="submit"  value="Login" >
+			<input type="button" onClick="createfunction()"  value="Create" >
+		</form>
+		<form method="post" action="{% url 'blog:login' %}" class="hidden" id="register-two">
+			{% csrf_token %}
+			{% if info.error_f %}
+				<p style="color:red">{{ info.error_f }}</p>
+			{% else %}
+			{% endif %}
+			{% if info.status %}
+			    <p id="infostatus" onClick="createfunction()" class="hidden"></p>
+			{% endif %}
+			{{ uf.as_p }}
+            <input type="submit"  value="Register" >
+			<input type="button" onClick="returnlogin()" value="Login" >
+		</form>
+		<div class="clear"> </div>
+		<div class="clear"> </div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="{% static 'blog/js/jquery-1.11.3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'blog/js/login-1.8.1.js' %}"></script>

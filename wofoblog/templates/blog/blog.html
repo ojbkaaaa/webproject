@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block main %}
+<!--<div class="filter blog-border">
+        <div class="clearfix"></div>
+        <div class="tag-list">
+            <form id="filter_form" method="GET" action="/blog/">
+                <!--排序类型-->
+                <input type="hidden" name="sf" id="sort_sf" value="date">
+                <!--排序方式
+                <input type="hidden" name="st" id="sort_st" value="-1">
+                <input type="hidden" name="wd" id="keywords" value="">
+            </form>
+        </div>
+</div>-->
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
+                        <div class="row tm-margin-t-big">
+                            {% csrf_token %}
+                            {% for list in blog_set %}
+                            <div class="col-xs-12" style=" padding-top: 0px; padding-bottom: 100px;">
+                                <div class="">
+                                    <span style="display: flex;">标题：<a href="{% url 'blog:detail' list.blog_number %}"  class="text-uppercase" style="font-size:25px;">{{ list.title }}</a></span>
+                                    <p style="display: inline;"><h6 style="display: inline;">阅读量</h6>：{{ list.views }}
+                            &nbsp&nbsp <h6 style="display: inline;">创建时间</h6>：{{ list.create_data }}</p>
+
+                                    <span style="display: block;">摘要：
+                                    <p class="" style="height: 52px;">{{ list.blog_content|truncatechars_html:200|safe|striptags }}...</p></span>
+
+                                </div>
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 tm-aside-r">
+
+                        <div class="tm-aside-container">
+                            <h3 class="tm-gold-text tm-title">
+                                标签
+                            </h3>
+                            <nav>
+                                <ul class="nav" style="">
+                                    {% for tag in tag_list %}
+
+                                    <li><a href="{% url 'blog:tagview' tag.pk %}" class="tm-text-link" name="{{ tag }}">{{ tag }}</a></li>
+
+                                    {% endfor %}
+                                </ul>
+                            </nav>
+                            <hr class="tm-margin-t-small">
+
+                            <hr class="tm-margin-t-small">
+
+
+                        </div>
+
+
+                    </aside>
+                    <div class="pagination col-xs-12">
+                                {{ page_str }}
+                    </div>
+                </div>
+
+            </div>
+
+{% endblock main %}
+
+
+{% block css %}
+        .pagination .page{
+            display: inline-block;
+            padding: 5px;
+            background-color: cyan;
+            margin: 5px;
+        }
+        .pagination .page.active{
+            background-color: brown;
+            color: white;
+        }
+{% endblock %}

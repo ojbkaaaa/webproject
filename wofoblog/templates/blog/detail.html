@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% block main %}
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
+                        <div class="tm-blog-post" id="blog/{{ context.blog_number }}">
+                            <h1  class="tm-gold-text" style="font-size:40px;" >{{ context.title }}</h1>
+                            <p style="display: inline;"><h6 style="display: inline;">阅读量</h6>：{{ context.views }}
+                            &nbsp&nbsp <h6 style="display: inline;">创建时间</h6>：{{ context.create_data }}</p>
+                            <!--<img src="{}" alt="Image" class="img-fluid tm-img-post">-->
+                            <p>{{ context.blog_content|safe }}</p>
+                        </div>
+
+                        {% if not username %}
+                        <div>请<a href="{% url 'blog:user_info' %}">登录</a>后参与评论</div>
+                        {% else %}
+                        <div>你好，{{ username }}</div>
+                        {% endif %}
+                        <form class="comment-form" method="post" action="{% url 'comments:comment' %}">
+                            {% csrf_token %}
+                            <textarea name="ckeditorcomment" cols="20" rows="2" id="editor1">
+                            </textarea>
+                            <button class="button button-primary-flat button-rounded pull-right no-login" type="button"  onclick="subcom({{ context.blog_number }})">
+                                提交评论
+                            </button>
+                        </form>
+                        <div class="framework_nav">
+                            <ul>
+                                <ul show="true">
+                                {% recursetree nodes %}
+                                    {% if node.is_leaf_nodes %}
+                                    <p>{{ node }}: </p>
+                                        <div>{{ node.blog_commit|safe }}</div>
+                                    {% else %}
+                                    <p>{{ node }}: </p>
+                                        <div style="background-color: #f5f5f5; margin: 5px; padding: 10px 10px 10px 10px; border: 1px solid #eaeaea;font-size: 14px !important;color: #666;">{{ node.blog_commit|safe }}</div>
+                                    <a type="button" id="{{ node.number_commit }}" onclick="mm({{ node.number_commit }})" class="chose">回复</a>
+                                    <form method="post" action="{% url 'comments:add' %}" class="chose hidden {{ node.number_commit }}" >
+
+                                        <textarea id="zfq" type="text" name="info" ></textarea>
+                                        {% csrf_token %}
+                                        <input type="button" class="{{ node.number_commit }}" onclick="gg({{ node.number_commit }})" value="回复"/>
+                                    </form>
+                                    <ul>
+                                    {{ children }}
+                                    </ul>
+                                    {% endif %}
+                                    {% endrecursetree %}
+                                </ul>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 tm-aside-r">
+
+                        <div class="tm-aside-container">
+                            <h3 class="tm-gold-text tm-title">
+                                其他的信息
+                            </h3>
+                            <nav>
+                                <ul class="nav">
+                                    <li><a class="tm-text-link">企鹅联系我：470345435</a></li>
+
+                                </ul>
+                            </nav>
+                            <hr class="tm-margin-t-small">   
+                            
+                            <hr class="tm-margin-t-small"> 
+
+                             
+                        </div>
+                        
+                        
+                    </aside>
+                </div>
+            </div>
+{% endblock  %}
+{% block ckeditor %}
+<script type="text/javascript" src="{% static 'blog/js/jquery-1.11.3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+{% endblock %}
+
+{% block js %}
+
+
+<script>
+     CKEDITOR.replace( 'ckeditorcomment' ,
+     {uiColor: '#9AB8F3',
+     toolbar:[
+            ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', '-', 'About']
+        ]});
+</script>
+<script type="text/javascript" src="{% static 'blog/js/jquery.cookie.js' %}"></script>
+<script src="{% static 'blog/js/detail-1.9.1.js' %}"></script>
+{% endblock %}

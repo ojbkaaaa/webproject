@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% block main %}
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
+                        <div class="tm-blog-post">
+                            <h3 class="tm-gold-text">{{ context.title }}</h3>
+
+                            <!--<img src="{}" alt="Image" class="img-fluid tm-img-post">-->
+                            <p>{{ context.blog_content|safe }}</p>
+                        </div>
+
+                        {% if not username %}
+                        <div>请<a href="{% url 'blog:user_info' %}">登录</a>后参与评论</div>
+                        {% else %}
+                        <div>你好，{{ username }}</div>
+                        {% endif %}
+                        <form class="comment-form" method="post" action="/post/submit-comment/">
+                            <textarea name="ckeditorcomment" cols="20" rows="2">
+
+                            </textarea>
+                            <button class="button button-primary-flat button-rounded pull-right no-login" type="submit" id="submit-button">
+                                <i class="fa fa-check-square-o"></i>提交评论
+                            </button>
+                        </form>
+
+                        <div>
+                            {% for comment in nodes %}
+                        <div>
+                                <p>{{ comment }}</p><p>{{ comment.blog_commit }}</p>
+                                <input type="button" id="{{ comment.number_commit }}" onclick="mm({{ comment.number_commit }})" class="chose"  value="回复" />
+                                <form method="post" action="{% url 'comments:add' %}" class="chose hidden {{ comment.number_commit }}" >
+                                    <textarea type="text" id="info"></textarea>
+                                    <input type="button" class="{{ comment.number_commit }}" onclick="gg({{ comment.number_commit }})" value="回复"/>
+                                </form>
+                        </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 tm-aside-r">
+
+                        <div class="tm-aside-container">
+                            <h3 class="tm-gold-text tm-title">
+                                其他的博文
+                            </h3>
+                            <nav>
+                                <ul class="nav">
+                                    <li><a href="#" class="tm-text-link">Lorem ipsum dolor sit</a></li>
+
+                                </ul>
+                            </nav>
+                            <hr class="tm-margin-t-small">   
+                            
+                            <hr class="tm-margin-t-small"> 
+
+                             
+                        </div>
+                        
+                        
+                    </aside>
+                </div>
+            </div>
+{% endblock  %}
+{% block ckeditor %}
+<script type="text/javascript" src="{% static 'blog/js/jquery-1.11.3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'blog/js/jquery-1.11.3.min.js' %}"></script>
+<script>
+     CKEDITOR.replace( 'ckeditorcomment' , {uiColor: '#9AB8F3'});
+</script>
+<script>
+
+    function mm(nid){
+		var class_id = document.getElementById(nid);
+		var class_list = class_id.nextSibling.nextSibling;
+
+        var list = class_id.parentElement.parentElement.children;
+        for(var i=0;i<list.length;i++){
+                var current_item = list[i].children;
+                current_item[3].classList.add('hidden');
+                var area = current_item[3].children
+                area[0].value = ''
+            }
+         class_list.classList.remove('hidden');
+        }
+    function gg(nid){
+        var class_id = document.getElementsByClassName(nid);
+        class_id[0].classList.add('hidden');
+        var url = window.location.href;
+        var new_url = url.substring('/');
+        var len = new_url.length;
+        var number = new_url[len-1];
+        var item = {
+            "number_commit":nid,
+            "to_blog_id":number,
+            "blog_commit":$('#info').val()
+
+        }
+        number_commit=nid;
+        to_blog_id=number;
+        blog_commit=$('#info').val();
+
+        $.ajax({
+                url:"{% url 'comments:add' %}",
+                type:'POST',
+                dataType:'json',
+                cache: false,
+                async:true,
+                traditional: true,
+                data:{
+                "number_commit":nid,
+                "to_blog_id":number,
+                "blog_commit":$('#info').val()
+                },
+                success:function(e){
+                    console.log(e)
+                }
+            })
+    }
+
+
+</script>
+{% endblock %}

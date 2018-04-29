@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load blog_tag %}
+{% block main %}
+
+            <div class="container-fluid">
+                <div class="row tm-2-rows-sm-swap">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 tm-2-rows-sm-down-2">
+                        
+                        <h3 class="tm-gold-text">最新的Blog</h3>
+                        
+                        <nav>
+
+                            <ul class="nav">
+                            {% get_blog_num as blog_num %}
+                            {% for blog_info in blog_num %}
+                                <li>
+                                    <!--<a href="/blog/{{ blog_info.blog_number }}" class="tm-text-link">{{ blog_info.title }}</a>-->
+                                    <a href="{% url 'blog:detail' blog_info.blog_number %}" class="tm-text-link">{{ blog_info.title }}</a>
+
+                                </li>
+                            {% empty %}
+                                <div>暂时还没有发布的文章！</div>
+                            {% endfor %}
+                            </ul>
+                        </nav>   
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 tm-2-rows-sm-down-1">
+                        <h3 class="tm-gold-text">读者文摘</h3>
+                        <p>文摘内容，每日一篇</p>
+                    </div>
+                </div>
+                
+                <div class="row tm-margin-t-mid">
+                    
+
+                    
+                </div> <!-- row -->
+
+            </div>
+
+{% endblock  %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block main %}
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
+                        <div class="row tm-margin-t-big">
+                            {% for list in blog_set %}
+                            <div class="col-xs-12" style=" padding-top: 15px; padding-bottom: 15px;">
+                                <div class="">
+                                    <span style="">标题：</span>
+                                    <a href="{% url 'blog:detail' list.blog_number %}"  class="text-uppercase" style="font-size:25px;">{{ list.title }}</a>
+                                    <span style="display: block;">阅读量：<a href="#" style="color: #06111b;" >{{ list.views }} </a></span>
+
+                                    <span style="display: block;">摘要：
+                                    <p class="" style="height: 52px;">{{ list.blog_excerpt }}...</p></span>
+
+                                </div>
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 tm-aside-r">
+
+                        <div class="tm-aside-container">
+                            <h3 class="tm-gold-text tm-title">
+                                标签
+                            </h3>
+                            <nav>
+                                <ul class="nav" style="">
+                                    {% for tag in tag_list %}
+                                    <li><a href="#" class="tm-text-link">{{ tag }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </nav>
+                            <hr class="tm-margin-t-small">
+
+                            <hr class="tm-margin-t-small">
+
+
+                        </div>
+
+
+                    </aside>
+                    <div class="pagination col-xs-12">
+                                {{ page_str }}
+                    </div>
+                </div>
+
+            </div>
+
+{% endblock main %}
+
+
+{% block css %}
+        .pagination .page{
+            display: inline-block;
+            padding: 5px;
+            background-color: cyan;
+            margin: 5px;
+        }
+        .pagination .page.active{
+            background-color: brown;
+            color: white;
+        }
+{% endblock %}

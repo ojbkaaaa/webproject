@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="filter blog-border">
+        <div class="filter-item">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    发布日期 <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" onclick="blog_sort('date','-1');" name="date">
+                        发布日期从近到远
+                    </a></li>
+                    <li><a href="javascript:void(0);" onclick="blog_sort('date','1');" name="date">
+                        发布日期从远到近
+                    </a></li>
+                 </ul>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    阅读数 <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" onclick="blog_sort('view','-1');" name="view">
+                        阅读数由多到少
+                    </a></li>
+                    <li><a href="javascript:void(0);" onclick="blog_sort('view','1');" name="view">
+                        阅读数由少到多
+                    </a></li>
+                 </ul>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    评论数 <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="javascript:void(0);" onclick="blog_sort('comment','-1');" name="comment">
+                        评论数由多到少
+                    </a></li>
+                    <li><a href="javascript:void(0);" onclick="blog_sort('comment','1');" name="comment">
+                        评论数由少到多
+                    </a></li>
+                 </ul>
+            </div>
+
+            <span style="padding-left:1em; white-space:nowrap;">
+                排序：<span id="sort_content">发布日期从近到远</span>
+            </span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="tag-list">
+            <form id="filter_form" method="GET" action="/blog/">
+                <!--排序类型-->
+                <input type="hidden" name="sf" id="sort_sf" value="date">
+                <!--排序方式-->
+                <input type="hidden" name="st" id="sort_st" value="-1">
+                <input type="hidden" name="wd" id="keywords" value="">
+                <ul>
+                    <li class="tag-recommend">
+                        <input id="recommend" type="checkbox" name="recommend" value="true">
+                        <label for="recommend">推荐</label>
+                    </li>
+
+                    <li class="tag-recommend">
+                        <input id="check_all" type="checkbox" name="check_all" value="true">
+                        <label for="check_all">全部类别&nbsp;(192)</label>
+                    </li>
+
+
+                        <li>
+                            <input id="tag_1" type="checkbox" name="tag" value="1" checked="">
+                            <label for="tag_1">我的网站搭建&nbsp;(56)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_6" type="checkbox" name="tag" value="6">
+                            <label for="tag_6">Python&nbsp;(31)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_8" type="checkbox" name="tag" value="8">
+                            <label for="tag_8">Django&nbsp;(27)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_2" type="checkbox" name="tag" value="2">
+                            <label for="tag_2">Excel&nbsp;(18)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_10" type="checkbox" name="tag" value="10">
+                            <label for="tag_10">VSTO&nbsp;(15)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_3" type="checkbox" name="tag" value="3">
+                            <label for="tag_3">数据库&nbsp;(12)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_12" type="checkbox" name="tag" value="12">
+                            <label for="tag_12">机器学习&nbsp;(11)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_4" type="checkbox" name="tag" value="4">
+                            <label for="tag_4">vb/vba&nbsp;(8)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_9" type="checkbox" name="tag" value="9">
+                            <label for="tag_9">Linux&amp;服务器&nbsp;(7)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_7" type="checkbox" name="tag" value="7">
+                            <label for="tag_7">硬件&nbsp;(5)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_11" type="checkbox" name="tag" value="11">
+                            <label for="tag_11">Web前端&nbsp;(5)</label>
+                        </li>
+
+                        <li>
+                            <input id="tag_5" type="checkbox" name="tag" value="5">
+                            <label for="tag_5">C#&nbsp;(3)</label>
+                        </li>
+
+
+
+                        <li><a class="btn btn-success btn-xs" href="/blog/">清除条件</a></li>
+
+                </ul>
+            </form>
+        </div>
+
+
+    </div>
+</body>
+</html>

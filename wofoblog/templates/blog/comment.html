@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_detail %}{% endblock %}
+
+{% block main %}
+
+{% if session %}
+    <div>尚未登录，请<a href="{% url 'blog:user_info' %}">登录</a>后参与评论</div>
+{% else %}
+    <div>{{ session }}</div>
+{% endif %}
+<form class="comment-form" method="post" action="/post/submit-comment/">
+    <textarea name="ckeditorcomment" cols="20" rows="2">
+
+    </textarea>
+    <button class="button button-primary-flat button-rounded pull-right no-login" type="submit" id="submit-button">
+        <i class="fa fa-check-square-o"></i>提交评论
+    </button>
+    {% csrf_token %}
+    {% for comment in comments %}
+    <div>
+        <div>{{ comment }}</div>
+        <p>{ comment.blog_commit }</p>
+            <input type="submit" value="回复"/>
+            {%  %}
+    </div>
+    {% endfor %}
+ </form>
+
+
+{% endblock main %}
+
+{% block ckeditor %}
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+{% endblock %}
+
+{% block js %}
+<script>
+     CKEDITOR.replace( 'ckeditorcomment' , {uiColor: '#9AB8F3'});
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
