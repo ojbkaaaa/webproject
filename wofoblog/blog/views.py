@@ -462,7 +462,7 @@ def imageupdate(request):
         base_dic = os.path.join(base_dic, 'media\headImg')
         # print(base_dic)
         file_obj = request.FILES.get('avatar')
-                try:
+        try:
             base_dic = os.path.join(base_dic, file_obj.name)
             # print('3')
         except:
