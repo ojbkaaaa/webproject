@@ -456,24 +456,27 @@ def imageupdate(request):
         phone = request.POST.get('phone')
         common = request.POST.get('common')
         base_dic = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        # print(base_dic)
+        print(base_dic)
         uf = User_infoForm(request.POST)
-        print(uf.errors)
+        # print(uf.errors)
         base_dic = os.path.join(base_dic, 'media\headImg')
         # print(base_dic)
         file_obj = request.FILES.get('avatar')
-        try:
+                try:
             base_dic = os.path.join(base_dic, file_obj.name)
+            # print('3')
         except:
-            if file_obj:
-                with open(base_dic, 'wb') as f:
-                    for chunk in file_obj.chunks():
-                        f.write(chunk)
-                User_info.objects.filter(name=username).update(name=username, email=email, phone=phone, common=common,
+            # print('4')
+            base_dic = os.path.join(base_dic, 'uiface2.png')
+        if file_obj:
+            with open(base_dic, 'wb') as f:
+                for chunk in file_obj.chunks():
+                    f.write(chunk)
+            User_info.objects.filter(name=username).update(name=username, email=email, phone=phone, common=common,
                                                            pwd=pwd,
                                                            headImg=file_obj)
-            else:
-                User_info.objects.filter(name=username).update(name=username, email=email, phone=phone, common=common,
+        else:
+            User_info.objects.filter(name=username).update(name=username, email=email, phone=phone, common=common,
                                                            pwd=pwd)
 
         return HttpResponse(base_dic)
