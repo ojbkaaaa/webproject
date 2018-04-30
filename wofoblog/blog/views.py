@@ -455,19 +455,19 @@ def imageupdate(request):
         email = request.POST.get('email')
         phone = request.POST.get('phone')
         common = request.POST.get('common')
-        base_dic = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        base_dic =os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         print(base_dic)
         uf = User_infoForm(request.POST)
         # print(uf.errors)
-        base_dic = os.path.join(base_dic, 'media\headImg')
-        # print(base_dic)
+        base_dic = os.path.join(base_dic, 'media/headImg')
+        print(base_dic)
         file_obj = request.FILES.get('avatar')
         try:
             base_dic = os.path.join(base_dic, file_obj.name)
-            # print('3')
+            print('3')
         except:
-            # print('4')
-            base_dic = os.path.join(base_dic, 'uiface2.png')
+            print('4')
+            base_dic = os.path.join(base_dic, 'touxiang.jpg')
         if file_obj:
             with open(base_dic, 'wb') as f:
                 for chunk in file_obj.chunks():
