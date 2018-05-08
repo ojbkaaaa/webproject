@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% load blog_tag %}
 {% block main %}
 
@@ -27,8 +28,9 @@
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 tm-2-rows-sm-down-1">
-                        <h3 class="tm-gold-text">读者文摘</h3>
-                        <p>文摘内容，每日一篇</p>
+                        <h3 class="tm-gold-text">来自鼓励</h3>
+                        <img src="{% static '2.jpg' %}">
+
                     </div>
                 </div>
                 

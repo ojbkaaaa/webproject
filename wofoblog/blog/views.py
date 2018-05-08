@@ -512,3 +512,17 @@ def page_error(request):
     print(request.POST)
     print(request.GET)
     return render_to_response('blog/500.html')
+
+
+from .project.id97 import get_one_text
+from django.views.decorators.cache import cache_page
+
+@cache_page(60 * 60)
+def item(request):
+    url = 'http://www.id97.com/movie/?tag=%E7%A7%91%E5%B9%BB'
+    url_list = get_one_text(url)
+    # for i in url_list:
+    #     for key in i:
+    #         pass
+    return render(request, 'blog/item.html', {'url_list': url_list})
+

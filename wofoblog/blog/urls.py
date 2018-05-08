@@ -35,6 +35,7 @@ urlpatterns = [
 #    url(r'^register/$', views.register, name='register'),
     url(r'^add/$', views.add, name='add'),
     url(r'comments', include('comments.urls')),
+    url(r'item', views.item, name='item'),
     # url(r'^find/$', views.find, name='find'),
     # url(r'^image/$', views.image, name='image'),
     url(r'^imageupdate/$', views.imageupdate, name='imageupdate'),

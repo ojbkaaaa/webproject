@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<div id="movieTabContent" class="tab-content">
+</div><!-- end panel -->
+<div role="tabpanel" class="tab-pane" id="sourceDown" aria-labelledby="sourceDown-tab">
+    <div class="panel panel-default resource-list">
+        <div class="panel-heading"><strong>片源下载 - 高清片源下载：</strong></div>
+            <table class="table table-hover" style="margin-bottom:0;">
+                <tbody>
+                {% for info in url_list %}
+                {% for k,v in info.items %}
+                    <tr>
+                        <td class="text-break" style="padding:8px 0;"><div style="height:1.5em;line-height:1.5;overflow:hidden;"><a title="{{ k }}" is_source="yes" rel="nofollow" href="{{ v }}">&ensp;&ensp;&ensp;{{ k }}</a></div></td>
+                    </tr>
+                {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        <div class="panel-footer resource-help">
+            <strong>片源下载帮助：</strong><br />
+            1、片源的码率比较高，所以体积相对较大。<br />
+            2、国外的片源一般是没有中文字幕的，所以请做好找字幕的准备。<br />
+            3、蓝光原盘拷贝，体积可能会达到几十个G，如果不是原盘爱好者，不建议下载。
+        </div>
+    </div><!-- end panel -->
+</div>
+</div>
+
+
+
+{% endblock %}
