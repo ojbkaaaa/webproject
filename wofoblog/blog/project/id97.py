@@ -33,9 +33,6 @@ def get_one_text(url):
         # print(image)
         filename = 'E:/move/' + file_name
         path = '%s/%s.jpg' % (filename, file_name)
-        # downimg(filename, path, image)
-        # url_list.append(file_url)
-        # print(file_url)
         attr = file_url.split('/')[-1]
         magnet, text = get_one_info(attr, filename, file_name)
         info[text] = magnet
@@ -51,34 +48,7 @@ def get_one_info(attr, path, name): # 获取每一个电影，并创建文本保
     # print(info)
     text = info.find('td', class_='text-break').find('a')['title']
     magnet = info.find('td', class_='text-break').find('a')['href']
-    # print('===')
-    # print(text)
-    # print("------")
-    # print(magnet)
-    # print('===')
     return magnet, text
     #print("完成%s的下载"% name)
 
-def downimg(filename,path,image):
-    folder = os.path.exists(filename)
-    if not folder:
-        os.makedirs(filename)
-        if not os.access(path, os.F_OK):
-            # time.sleep(1)
-            urllib.request.urlretrieve(image, path)  # 下载图片
-    else:
-        if not os.access(path, os.F_OK):
-            # time.sleep(1)
-            urllib.request.urlretrieve(image, path)
-
-
-
-
-if __name__ == '__main__':
-    url = 'http://www.id97.com/movie/?tag=%E7%A7%91%E5%B9%BB'
-    print('获取链接完毕，正在获取资源....')
-    get_one_text(url)
-
-    print('资源获取完毕')
-    #print(text)
 
