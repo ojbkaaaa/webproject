@@ -16,9 +16,8 @@ def get_html(url):  # 抓取网页
     except:
         return "someting error"
 
-
 def get_one_info(attr): # 获取每一个电影，并创建文本保存
-    html = get_html('http://www.id97.com/videos/resList/' + attr)
+    html = get_html('http://www.id97.com/videos/resList/'+attr)
     soup = bs4.BeautifulSoup(html, 'lxml')
     info = soup.find_all('table', class_='table table-hover')  # 获取网盘地址
     # print(info)
@@ -33,7 +32,7 @@ def get_one_info(attr): # 获取每一个电影，并创建文本保存
     return d
 
 def get_one_text():
-    url = 'http://www.id97.com/movie/?tag=%E7%A7%91%E5%B9%BB'
+    url = 'http://www.id97.com/movie/'
     html = get_html(url)
     global jobs
     d = []
@@ -63,5 +62,3 @@ if __name__ == '__main__':
     # print(jobs)
     for job in jobs:
         print(job.get())
-
-
