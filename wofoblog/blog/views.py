@@ -1,6 +1,8 @@
 ﻿from django.shortcuts import render,get_object_or_404,redirect,render_to_response
 from django.http import HttpResponse
 from utils import pagination
+from multiprocessing import Pool
+from .project import  id97
 from django.template.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from .models import User_info, Tag, Blog
@@ -519,10 +521,19 @@ from django.views.decorators.cache import cache_page
 
 @cache_page(60 * 60)
 def item(request):
-    url = 'http://www.id97.com/movie/?tag=%E7%A7%91%E5%B9%BB'
-    url_list = get_one_text(url)
-    # for i in url_list:
-    #     for key in i:
-    #         pass
-    return render(request, 'blog/item.html', {'url_list': url_list})
+    info = id97.get_one_text()
+    jobs = []
+    list = []
+    p = Pool(processes=5)
+    # d = mgr.dict()
+    for i in info:
+        jobs.append(p.apply_async(id97.get_one_info, (i,)))
+
+    p.close()
+    p.join()
+    print(jobs)
+    for job in jobs:
+       # print(job.get())
+        list.append(job.get())
+    return render(request, 'blog/item.html', {'url_list': list})
 
