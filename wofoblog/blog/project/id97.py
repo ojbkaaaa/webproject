@@ -22,14 +22,15 @@ def get_one_info(attr): # 获取每一个电影，并创建文本保存
     info = soup.find_all('table', class_='table table-hover')  # 获取网盘地址
     # print(info)
     d = {}
-    if not info[0]:
-        info = info[1]
-    else:
-        info = info[0]
-    text = info.find('td', class_='text-break').find('a')['title']
-    magnet = info.find('td', class_='text-break').find('a')['href']
-    d[text] = magnet
-    return d
+    if info:
+        if not info[0]:
+            info = info[1]
+        else:
+            info = info[0]
+        text = info.find('td', class_='text-break').find('a')['title']
+        magnet = info.find('td', class_='text-break').find('a')['href']
+        d[text] = magnet
+        return d
 
 def get_one_text():
     url = 'http://www.id97.com/movie/'
