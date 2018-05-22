@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="catalog-content-wrap" id="j-catalogWrap" data-l1="14">
+
+            <div class="volume-wrap">
+
+                <div class="volume">
+                    <dl class="cf">
+                        <dt style="background: none repeat scroll 0 0 #C3DFEA;display: inline;float: left;font-size: 24px;line-height: 28px;overflow: hidden;text-align: center;vertical-align: middle;width: 100%;margin: auto auto 10px;padding: 10px 0px;">{{ novel_name }}</dt>
+                        {% if list %}
+                            {% for i in list %}
+                            <dd data-rid="{{ i.id }}" style="width: 33%;float: left;height: 25px;border-bottom: 1px dashed #CCC;margin: auto;text-indent: 10px;line-height: 200%;margin-bottom: 5px;"><a href="{{ i.url }}">{{ i.name }}</a>
+                            {% endfor %}
+                        {% else %}
+                            <div class="no-result-wrap" data-l1="3">
+                        <div class="no-result-img">
+                            <span class="no-data-img"></span>
+                        </div>
+                        <h3>建议你喝杯茶，稍后重试</h3>
+                </div>
+                        {% endif %}
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+

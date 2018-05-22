@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block main %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div id="wrapper" style="margin-bottom: 100px;border: 2px solid #88C6E5;overflow: hidden;width: 976px;margin: 10px auto;">
+    {% if info %}
+	<div>
+        <a href="/blog/book/{{ info.head_url }}">{{ info.name }}</a> &gt; {{ info.book_name }}
+        <div class="bookname">
+            <h1>{{ info.book_name }}</h1>
+            <div class="bottem1">
+                <a href="{{ info.last_page }}">上一章</a> ← <a href="/blog/book/{{ info.head_url }}">章节列表</a> → <a href="{{ info.next_page }}">下一章</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id="content"><p style="width: 94%;margin: auto auto 10px;padding: 10px 0px;">{{ info.txt }}</p><br><br>&nbsp;&nbsp;&nbsp;&nbsp;;</div>
+    <div class="bottem2">
+        <a href="{{ info.last_page }}">上一章</a> ← <a href="/blog/book/{{ info.head_url }}">章节目录</a> → <a href="{{ info.next_page }}">下一章</a>
+    </div>
+    {% else %}
+        <div class="no-result-wrap" data-l1="3">
+                        <div class="no-result-img">
+                            <span class="no-data-img"></span>
+                        </div>
+                        <h3>建议你喝杯茶，稍后重试</h3>
+                </div>
+    {% endif %}
+</div>
+{% endblock  %}

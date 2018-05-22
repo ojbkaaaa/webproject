@@ -2,7 +2,7 @@
 from django.http import HttpResponse
 from utils import pagination
 from multiprocessing import Pool
-from .project import  id97
+from .project import  id97,dingdian
 from django.template.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from .models import User_info, Tag, Blog
@@ -536,4 +536,71 @@ def item(request):
        # print(job.get())
         list.append(job.get())
     return render(request, 'blog/item.html', {'url_list': list})
+
+@csrf_exempt
+def novel(request):
+    item = {'id': 1}
+    try:
+        xs = request.POST.get('xs')
+        xx = xs.replace('}', '}flag')
+        novel_list = xx.split('flag')
+        print(type(novel_list))
+    except:
+        pass
+    return render(request, 'blog/xs.html')
+    pass
+
+@csrf_exempt
+def find(request):
+    data = request.POST.get('data')
+    # print(data)
+    flag = dingdian.get_xs_url(data)
+    # print(flag)
+    # print(flag)
+    if flag:
+        # item = {}
+        # for i in flag:
+        #     item[i.name] = i.id
+        # print(list)
+        return HttpResponse(json.dumps(flag))
+    else:
+        return HttpResponse(flag)
+    pass
+
+@csrf_exempt
+def book(request, pk):
+    # print(request.GET)
+    # print(pk)
+    try:
+        info = dingdian.get_xs_info(pk)
+        novel_name = info.pop()['novel_name']
+        print(novel_name)
+    except:
+        info = False
+    # print(info)
+    return render(request, 'blog/book.html', {'list': info, 'novel_name': novel_name})
+
+def book_detail(request, pk):
+    info = {}
+    try:
+        # pk = 48_48573_2519270'
+        print('1111')
+        url_list = pk.split('_')
+        head_url = '%s_%s' % (url_list[0], url_list[1])  # 该小说的地址
+        last_page = '%s_%s_%s' % (url_list[0], url_list[1], (int(url_list[2])-1))    # 上一章
+        next_page = '%s_%s_%s' % (url_list[0], url_list[1], (int(url_list[2])+1))   # 下一章
+        url = '%s_%s/%s.html' % (url_list[0], url_list[1], url_list[2])  # 当前页
+        book_name, txt, name = dingdian.get_xs_text(url)
+        print(book_name, name)
+        info['head_url'] = head_url
+        info['last_page'] = last_page
+        info['next_page'] = next_page
+        info['url'] = url
+        info['book_name'] = book_name
+        info['txt'] = txt
+        info['name'] = name
+    except:
+        info = False
+    print(info)
+    return render(request, 'blog/book_detail.html', {'info': info})
 

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block main %}
+<link data-ignore="true" rel="shortcut icon" type="image/x-icon" href="//qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
+<link data-ignore="true" rel="Bookmark" type="image/x-icon" href="//qidian.gtimg.com/qd/favicon/qd_icon.c443c.ico">
+<link rel="stylesheet" data-ignore="true" href="//qidian.gtimg.com/c/=/qd/css/reset.ddecf.css,/qd/css/global.d41d8.css,/qd/css/font.089a4.css,/qd/css/header.17852.css,/qd/css/module.429f5.css,/qd/css/list_module.37b81.css,/qd/css/search.1d4fa.css,/qd/css/layout.5de0f.css,/qd/css/qd_popup.7e65f.css,/qd/css/footer.feb73.css,/qd/css/lbfUI/css/ComboBox.8997f.css,/qd/css/lbfUI/css/Button.e5a3e.css">
+<link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Dropdown.css"><link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Autocomplete.css"><link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/LightTip.css"><link charset="utf-8" rel="stylesheet" href="https://qidian.gtimg.com/qd/css/lbfUI/css/Popup.css">
+<style name="lbf-overlay">.lbf-overlay { position:fixed; top:0; left:0;}</style>
+<div class="wrap">
+    <div class="search-wrap cf">
+        <input type="text" id="s-box" value="" autocomplete="off">
+        <button class="search-btn" id="search-btn" onclick="find()" data-eid="qd_S01">搜索</button>
+    </div>
+    <hr>
+    <div class="result-wrap box-center cf">
+        <div class="main-content-wrap fl">
+            <div id="result-list" data-l1="3">
+            <div class="book-img-text">
+                <ul class="result-list">
+
+                </ul>
+            </div>
+        </div>
+                    <div class="no-result-wrap" data-l1="3">
+                        <div class="no-result-img">
+                            <span class="no-data-img"></span>
+                        </div>
+                        <h3>没有输入有效关键词</h3>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+    function find(){
+        $.ajax({
+            async : true,
+            url:"/blog/find",
+            type:'POST',
+            data:{'data':$('#s-box').val()},
+        success:function(data) {
+            if (data){
+                $('.no-result-wrap')[0].classList.add('hidden')
+                $('.result-list').empty()
+                var data = JSON.parse(data)
+                var html = ''
+                $.each(data, function(i, item){
+                    console.log(item.jianjie)
+                    html = '<li data-rid="'+ item.id +'"><div class="book-mid-info"><h4><a href="'+item.url+'" target="_blank" data-eid="'+ item.id + '"><cite class="red-kw">'+ item.name + '</cite></a></h4><p class="author"><img src="//qidian.gtimg.com/qd/images/ico/user.f22d3.png"><a class="name" data-eid=" '+ item.id + '">'+ item.author +'</a></p><p class="update">'+ item.jianjie + '</p></div></li>'
+                    $('.result-list').append(html)
+            })}
+            else {
+                $('.no-result-wrap')[0].classList.remove('hidden')
+                $('.result-list').empty()
+            }
+            }
+        })
+    }
+</script>
+{% endblock %}

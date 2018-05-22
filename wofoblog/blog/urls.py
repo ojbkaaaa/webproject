@@ -40,7 +40,10 @@ urlpatterns = [
     # url(r'^image/$', views.image, name='image'),
     url(r'^imageupdate/$', views.imageupdate, name='imageupdate'),
     url(r'^tag/(?P<pk>[0-9]+)/$', views.tagview, name='tagview'),
-
+    url(r'^find$', views.find, name='find'),
+    url(r'^novel', views.novel, name='novel'),
+    url(r'^book/(?P<pk>[0-9]+\_[0-9]+)$', views.book, name='book'),
+    url(r'^book_detail/(?P<pk>[0-9]+\_[0-9]+\_[0-9]+)$', views.book_detail, name='book_detail'),
 ]
 handler404 = views.page_not_found
 handler500 = views.page_error
