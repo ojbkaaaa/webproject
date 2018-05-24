@@ -522,6 +522,7 @@ from django.views.decorators.cache import cache_page
 @cache_page(60 * 60)
 def item(request):
     info = id97.get_one_text()
+    #print(info)
     jobs = []
     list = []
     p = Pool(processes=5)
@@ -533,7 +534,7 @@ def item(request):
     p.join()
     print(jobs)
     for job in jobs:
-       # print(job.get())
+    #    print(job.get())
         list.append(job.get())
     return render(request, 'blog/item.html', {'url_list': list})
 

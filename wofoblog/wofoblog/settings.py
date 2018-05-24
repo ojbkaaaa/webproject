@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'xhd#39)e8e9&22*p+9ns(q=15cx!4!$(sfzhk0isbc)*ptb!&s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -59,12 +59,23 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
+#CACHES = {
+#            'default': {
+#                'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+#                'LOCATION': 'my_cache_table',  # 数据库表
+#            }
+#        }
 CACHES = {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-                'LOCATION': 'my_cache_table',  # 数据库表
-            }
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#            "PASSWORD": "mysecret"
         }
+    }
+}
+
 
 
 ROOT_URLCONF = 'wofoblog.urls'
