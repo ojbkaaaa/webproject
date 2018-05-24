@@ -59,12 +59,12 @@ def get_xs_url(ss):  # 获取书名相关的小说的信息
         return ''
     return list
 
-def get_xs_info(url):  # 获取小说所有章节链接
+def get_xs_info(e):  # 获取小说所有章节链接
     # txt_list = get_xs_url(url)
-    txt = {}
+    novel_txt = {}
     lists = []
     # url = txt_list[num]['url']
-    url = 'https://www.xxbiquge.com/%s/' % url
+    url = 'https://www.xxbiquge.com/%s/' % e
     html = get_html(url)
     soup = bs4.BeautifulSoup(html, 'lxml')
     # print(soup)
@@ -72,27 +72,35 @@ def get_xs_info(url):  # 获取小说所有章节链接
     list = soup.find('div', id='list')
     # print(list)
     list_url = list.find_all('dd')
-    for info in list_url:  # 获取每一个章节相关信息
-        name = info.find('a').text
-        url = info.find('a')['href']
-        # print(url)
-        # url = 'https:%s' % url
-        result = re.findall('(\d+)', url)
-        id = '_'.join(result)
-        # print(id)
-        # print(result)
-        url = '/blog/book_detail/%s' % id
-        txt['name'] = name
-        # txt['time'] = time
-        txt['url'] = url
-        txt['id'] = id
-        lists.append(txt)
-        txt = {}
-    txt['novel_name'] = novel_name
-    lists.append(txt)
-    return lists
-    pass
+    #for info in list_url:  # 获取每一个章节相关信息
+    for i in range(0, len(list_url)):
+        name = list_url[i].find('a').text
+        now_url = list_url[i].find('a')['href']
+        if i == 0:  # 第一章
+            url_1 = ''
+        else:
+            url_1 = list_url[i-1].find('a')['href']
+        if (i+1) == len(list_url):  # 最后一章
+            url_2 = ''
+        else:
+            url_2 = list_url[i + 1].find('a')['href']
+        result_1 = re.findall('(\d+)', url_1)
+        result_2 = re.findall('(\d+)', url_2)
+        result = re.findall('(\d+)', now_url)
+        id_now = '_'.join(result)
+        id_1 = '_'.join(result_1)
+        id_2 = '_'.join(result_2)
+        id11 = '%s-%s-%s' % (id_1, id_now, id_2)
+        now_url = '/blog/book_detail/%s' % id11
+        novel_txt['name'] = name
+        novel_txt['url'] = now_url
+        novel_txt['id'] = id11
+        lists.append(novel_txt)
+        novel_txt = {}
+    novel_txt['novel_name'] = novel_name
+    lists.append(novel_txt)
 
+    return lists
 
 def get_xs_text(url):
     # list = get_xs_info(url, num)

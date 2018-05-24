@@ -43,7 +43,7 @@ urlpatterns = [
     url(r'^find$', views.find, name='find'),
     url(r'^novel', views.novel, name='novel'),
     url(r'^book/(?P<pk>[0-9]+\_[0-9]+)$', views.book, name='book'),
-    url(r'^book_detail/(?P<pk>[0-9]+\_[0-9]+\_[0-9]+)$', views.book_detail, name='book_detail'),
+    url(r'^book_detail/(?P<pk>((\-)?(\_)?[0-9]+(\_)?(\-)?)+)$', views.book_detail, name='book_detail'),
 ]
 handler404 = views.page_not_found
 handler500 = views.page_error

@@ -8,14 +8,14 @@
         <div class="bookname">
             <h1>{{ info.book_name }}</h1>
             <div class="bottem1">
-                <a href="{{ info.last_page }}">上一章</a> ← <a href="/blog/book/{{ info.head_url }}">章节列表</a> → <a href="{{ info.next_page }}">下一章</a>
+                {% if info.last_page %}<a href="{{ info.last_page }}">上一章</a> ←{% else %} {% endif %}  <a href="/blog/book/{{ info.head_url }}">章节列表</a>  {% if info.next_page %}→ <a href="{{ info.next_page }}">下一章</a>{% else %} {% endif %}
             </div>
         </div>
     </div>
     <hr>
     <div id="content"><p style="width: 94%;margin: auto auto 10px;padding: 10px 0px;">{{ info.txt }}</p><br><br>&nbsp;&nbsp;&nbsp;&nbsp;;</div>
     <div class="bottem2">
-        <a href="{{ info.last_page }}">上一章</a> ← <a href="/blog/book/{{ info.head_url }}">章节目录</a> → <a href="{{ info.next_page }}">下一章</a>
+        {% if info.last_page %}<a href="{{ info.last_page }}">上一章</a> ←{% else %} {% endif %}  <a href="/blog/book/{{ info.head_url }}">章节列表</a>  {% if info.next_page %}→ <a href="{{ info.next_page }}">下一章</a>{% else %} {% endif %}
     </div>
     {% else %}
         <div class="no-result-wrap" data-l1="3">

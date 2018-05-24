@@ -554,45 +554,61 @@ def novel(request):
 @csrf_exempt
 def find(request):
     data = request.POST.get('data')
-    # print(data)
     flag = dingdian.get_xs_url(data)
-    # print(flag)
-    # print(flag)
     if flag:
-        # item = {}
-        # for i in flag:
-        #     item[i.name] = i.id
-        # print(list)
         return HttpResponse(json.dumps(flag))
     else:
         return HttpResponse(flag)
     pass
 
+novel_id = []
+
 @csrf_exempt
 def book(request, pk):
-    # print(request.GET)
-    # print(pk)
     try:
+        global novel_id
         info = dingdian.get_xs_info(pk)
         novel_name = info.pop()['novel_name']
-        print(novel_name)
+        novel_id = []
+        for i in range(len(info)):
+            novel_id.append(info[i]['id'])
     except:
         info = False
-    # print(info)
+        novel_name = ''
     return render(request, 'blog/book.html', {'list': info, 'novel_name': novel_name})
 
 def book_detail(request, pk):
     info = {}
     try:
-        # pk = 48_48573_2519270'
-        print('1111')
-        url_list = pk.split('_')
-        head_url = '%s_%s' % (url_list[0], url_list[1])  # 该小说的地址
-        last_page = '%s_%s_%s' % (url_list[0], url_list[1], (int(url_list[2])-1))    # 上一章
-        next_page = '%s_%s_%s' % (url_list[0], url_list[1], (int(url_list[2])+1))   # 下一章
-        url = '%s_%s/%s.html' % (url_list[0], url_list[1], url_list[2])  # 当前页
+        global novel_id
+        url_list = pk.split('-')
+        head_url = url_list[1]
+        for i in range(len(novel_id)):
+            if novel_id[i] == pk:
+                try:
+                    last_page = novel_id[i].split('-')[0]
+                    url = last_page.split('_')
+                    last_page_url = '%s_%s/%s.html' % (url[0], url[1], url[2])  # 判断上一章是否存在
+                    dingdian.get_xs_text(last_page_url)
+                    last_page = novel_id[i-1]
+                except:
+                    last_page = ''
+                try:
+                    next_page = novel_id[i].split('-')[2]
+                    url = next_page.split('_')
+                    next_page_url = '%s_%s/%s.html' % (url[0], url[1], url[2])  # 判断下一章是否存在
+                    dingdian.get_xs_text(next_page_url)
+                    next_page = novel_id[i+1]
+                except:
+                    next_page = ''
+                break
+            else:
+                last_page = ''
+                next_page = ''
+        head = head_url.split('_')
+        url = '%s_%s/%s.html' % (head[0], head[1], head[2])  # 当前页
+        head_url = '%s_%s' % (head[0], head[1])  # 该小说的地址
         book_name, txt, name = dingdian.get_xs_text(url)
-        print(book_name, name)
         info['head_url'] = head_url
         info['last_page'] = last_page
         info['next_page'] = next_page
@@ -602,6 +618,4 @@ def book_detail(request, pk):
         info['name'] = name
     except:
         info = False
-    print(info)
     return render(request, 'blog/book_detail.html', {'info': info})
-
